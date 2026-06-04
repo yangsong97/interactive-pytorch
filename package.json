@@ -1,0 +1,23 @@
+{
+  "name": "interactive-pytorch",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^6.0.2",
+    "@astrojs/svelte": "^8.1.2",
+    "astro": "^6.0.0",
+    "svelte": "^5.56.2"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3",
+    "vitest": "^2.0.0"
+  }
+}
