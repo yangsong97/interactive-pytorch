@@ -1,0 +1,12 @@
+---
+interface Props { notebook: string; }
+const { notebook } = Astro.props;
+const url = `https://colab.research.google.com/github/yangsong97/interactive-pytorch/blob/main/notebooks/${notebook}`;
+---
+<a class="colab-btn" href={url} target="_blank" rel="noopener">▶ Run this in Google Colab</a>
+<style>
+  .colab-btn { display:inline-block; border:1px solid var(--border); background:var(--surface);
+    color:var(--text); padding:.5rem .9rem; border-radius:var(--radius); text-decoration:none;
+    font-weight:600; font-size:.9rem; }
+  .colab-btn:hover { background:var(--accent-soft); }
+</style>

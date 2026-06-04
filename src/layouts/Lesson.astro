@@ -1,0 +1,41 @@
+---
+import Base from './Base.astro';
+import Sidebar from '../components/Sidebar.astro';
+import ColabButton from '../components/ColabButton.astro';
+import { getCollection } from 'astro:content';
+import { withBase } from '../lib/url';
+interface Props { title: string; summary: string; slug: string; colab?: string; }
+const { title, summary, slug, colab } = Astro.props;
+const all = (await getCollection('lessons', ({ data }) => !data.draft))
+  .sort((a, b) => a.data.order - b.data.order);
+const i = all.findIndex((l) => l.id === slug);
+const prev = i > 0 ? all[i - 1] : null;
+const next = i >= 0 && i < all.length - 1 ? all[i + 1] : null;
+---
+<Base title={`${title} · Interactive PyTorch`} description={summary}>
+  <div class="layout">
+    <aside class="rail"><Sidebar currentSlug={slug} /></aside>
+    <article class="article">
+      <h1>{title}</h1>
+      <p class="summary">{summary}</p>
+      <slot />
+      {colab && <div class="colab-wrap"><ColabButton notebook={colab} /></div>}
+      <nav class="prevnext">
+        {prev ? <a href={withBase(`/lessons/${prev.id}`)}>← {prev.data.title}</a> : <span></span>}
+        {next ? <a href={withBase(`/lessons/${next.id}`)}>{next.data.title} →</a> : <span></span>}
+      </nav>
+    </article>
+  </div>
+</Base>
+<style>
+  .layout { display:grid; grid-template-columns:240px 1fr; gap:2rem; max-width:1100px;
+    margin:0 auto; padding:1.5rem 1rem; }
+  .rail { position:sticky; top:1rem; align-self:start; max-height:90vh; overflow:auto; }
+  .article { min-width:0; }
+  .summary { color:var(--text-muted); font-size:1.05rem; }
+  .colab-wrap { margin:1.5rem 0; }
+  .prevnext { display:flex; justify-content:space-between; margin-top:2.5rem;
+    border-top:1px solid var(--border); padding-top:1rem; gap:1rem; }
+  .prevnext a { text-decoration:none; }
+  @media (max-width:780px){ .layout{ grid-template-columns:1fr; } .rail{ position:static; max-height:none; } }
+</style>
