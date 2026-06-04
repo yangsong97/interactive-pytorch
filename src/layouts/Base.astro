@@ -1,0 +1,37 @@
+---
+import '../styles/global.css';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+interface Props { title: string; description?: string; }
+const { title, description = 'Learn PyTorch interactively.' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a href={`${base}/`} class="brand">Interactive&nbsp;PyTorch</a>
+      <nav>
+        <a href={`${base}/start`}>How to use</a>
+        <a href="https://github.com/yangsong97/interactive-pytorch">GitHub</a>
+      </nav>
+    </header>
+    <slot />
+    <footer class="site-footer container">
+      <p>Built to learn PyTorch by seeing it. Code runs in Google Colab.</p>
+    </footer>
+    <style>
+      .site-header { display:flex; justify-content:space-between; align-items:center;
+        padding:1rem; border-bottom:1px solid var(--border); background:var(--surface); }
+      .brand { font-weight:700; text-decoration:none; }
+      .site-header nav a { margin-left:1rem; color:var(--text-muted); text-decoration:none; }
+      .site-header nav a:hover { color:var(--text); }
+      .site-footer { color:var(--text-muted); border-top:1px solid var(--border);
+        margin-top:3rem; padding-top:1.5rem; padding-bottom:2rem; font-size:.9rem; }
+    </style>
+  </body>
+</html>
